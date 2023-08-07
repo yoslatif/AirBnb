@@ -6,7 +6,7 @@
   "scripts": {
     "build": "echo 'No build step required'",
     "sequelizer": "npx sequelize-cli",
-    "sequelize": "sequelize-cli db:migrate",
+    "sequelize": "sequelize-cli",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
