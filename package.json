@@ -9,10 +9,12 @@
     "start": "per-env",
     "start:dev": "nodemon ./bin/www",
     "start:production": "node ./bin/www",
+    "start:development": "nodemon ./bin/www",
     "build": "node psql-setup-script.js",
     "install": "npm --prefix backend install backend",
     "dev:backend": "npm install --prefix backend start",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "migrate": "NODE_ENV=production dotenv sequelize-cli db:migrate"
   },
   "repository": {
     "type": "git",
@@ -26,11 +28,12 @@
   },
   "homepage": "https://github.com/yoslatif/AirBnb#readme",
   "dependencies": {
-    "dotenv": "^16.3.1",
     "mysql2": "^3.6.0"
   },
   "devDependencies": {
+    "dotenv": "^16.3.1",
     "nodemon": "^3.0.1",
-    "per-env": "^1.0.2"
+    "per-env": "^1.0.2",
+    "sequelize-cli": "^6.6.1"
   }
 }
