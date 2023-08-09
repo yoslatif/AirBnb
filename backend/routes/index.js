@@ -8,18 +8,3 @@ router.get('/hello/world', function(req, res) {
 });
 
 module.exports = router;
-
-
-// backend/app.js
-const routes = require('./routes');
-
-// ...
-
-app.use(routes); // Connect all the routes
-
-
-
-// backend/app.js
-// ...
-
-module.exports = app;
