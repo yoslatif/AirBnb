@@ -50,4 +50,26 @@ app.get('/', (req, res) => {
   });
 
 
+  app.use((req, res, next) => {
+    const notFoundError = new Error("Resource not found");
+    notFoundError.status = 404;
+    next(notFoundError);
+  });
+  
+
+  app.use(routes); // Connect all the routes
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  res.status(err.status || 500);
+  const isProduction = environment !== 'development';
+  res.json({
+    title: err.title || 'Server Error',
+    message: err.message,
+    stack: isProduction ? null : err.stack,
+  });
+});
+
+
+
 module.exports = app;
