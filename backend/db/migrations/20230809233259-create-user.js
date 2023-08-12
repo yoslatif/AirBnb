@@ -1,6 +1,6 @@
 'use strict';
 
-let options = {};
+let options = {snake_schema};
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;  // define your schema in options object
 }
