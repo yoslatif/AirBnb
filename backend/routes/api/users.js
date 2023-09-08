@@ -38,29 +38,88 @@ const validateSignup = [
     handleValidationErrors
   ];
 
-router.post(
-    '/',
-    validateSignup,
-    async (req, res) => {
-      const { firstName, lastName, email, password, username } = req.body;
-      const hashedPassword = bcrypt.hashSync(password);
-      const user = await User.create({ firstName, lastName, email, username, hashedPassword });
+// router.post(
+//     '/',
+//     validateSignup,
+//     async (req, res) => {
+//       const { firstName, lastName, email, password, username } = req.body;
+//       const hashedPassword = bcrypt.hashSync(password);
+//       const user = await User.create({ firstName, lastName, email, username, hashedPassword });
   
-      const safeUser = {
-        id: user.id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        username: user.username,
-      };
+//       const safeUser = {
+//         id: user.id,
+//         firstName: user.firstName,
+//         lastName: user.lastName,
+//         email: user.email,
+//         username: user.username,
+//       };
   
-      await setTokenCookie(res, safeUser);
+//       await setTokenCookie(res, safeUser);
   
-      return res.json({
-        user: safeUser
-      });
-    }
-  );
+//       return res.json({
+//         user: safeUser
+//       });
+//     }
+//   );
 
+
+router.post(
+  '/',
+  validateSignup,
+  async (req, res) => {
+      try {
+          const { firstName, lastName, email, password, username } = req.body;
+          const hashedPassword = bcrypt.hashSync(password);
+
+          // Check if a user with the given email or username exists
+          const emailExists = await User.findOne({ where: { email } });
+          const usernameExists = await User.findOne({ where: { username } });
+
+          if (emailExists) {
+              return res.status(500).json({
+                  message: "User already exists",
+                  errors: {
+                      email: "User with that email already exists"
+                  }
+              });
+          }
+
+          if (usernameExists) {
+              return res.status(500).json({
+                  message: "User already exists",
+                  errors: {
+                      username: "User with that username already exists"
+                  }
+              });
+          }
+
+          const user = await User.create({ firstName, lastName, email, username, hashedPassword });
+
+          const safeUser = {
+              id: user.id,
+              firstName: user.firstName,
+              lastName: user.lastName,
+              email: user.email,
+              username: user.username,
+          };
+
+          await setTokenCookie(res, safeUser);
+
+          return res.json({
+              user: safeUser
+          });
+      } catch (e) {
+          return res.status(400).json({
+              message: "Bad Request",
+              errors: {
+                  email: "Invalid email",
+                  username: "Username is required",
+                  firstName: "First Name is required",
+                  lastName: "Last Name is required",
+              }
+          });
+      }
+  }
+);
 
 module.exports = router;
