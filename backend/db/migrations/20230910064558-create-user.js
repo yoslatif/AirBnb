@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 let options = {};
 if (process.env.NODE_ENV === 'production') {
@@ -6,31 +6,29 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Users', {
+  up: async (queryInterface, Sequelize) => {
+    return queryInterface.createTable("Users", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      firstName: {
-        type: Sequelize.STRING(30),
-        allowNull: false,
-        unique: false
-      },
-      lastName: {
-        type: Sequelize.STRING(30),
-        allowNull: false,
-        unique: false
-      },
       username: {
-        type: Sequelize.STRING(30),
+        type: Sequelize.TEXT,
         allowNull: false,
         unique: true
       },
+      firstName: {
+        type: Sequelize.TEXT,
+        allowNull: false
+      },
+      lastName: {
+        type: Sequelize.TEXT,
+        allowNull: false
+      },
       email: {
-        type: Sequelize.STRING(256),
+        type: Sequelize.TEXT,
         allowNull: false,
         unique: true
       },
@@ -48,11 +46,9 @@ module.exports = {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
-    }, options);
+    });
   },
-
-  async down(queryInterface, Sequelize) {
-    options.tableName = "Users";
-    return queryInterface.dropTable(options);
+  down: async (queryInterface, Sequelize) => {
+    return queryInterface.dropTable("Users");
   }
 };
