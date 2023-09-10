@@ -48,3 +48,50 @@ async down (queryInterface, Sequelize) {
     }, {});
   }
 };
+
+
+
+// 'use strict';
+
+// const bcrypt = require("bcryptjs");
+
+// module.exports = {
+//   up: async (queryInterface, Sequelize) => {
+//     return queryInterface.bulkInsert('Users', [
+//       {
+//         firstName: 'demo',
+//         lastName: 'lition',
+//         email: 'demo@user.io',
+//         username: 'Demo-lition',
+//         hashedPassword: bcrypt.hashSync('password', 10),
+//         createdAt: new Date(),
+//         updatedAt: new Date()
+//       },
+//       {
+//         firstName: 'fake',
+//         lastName: 'usa',
+//         email: 'user1@user.io',
+//         username: 'FakeUser1',
+//         hashedPassword: bcrypt.hashSync('password2', 10),
+//         createdAt: new Date(),
+//         updatedAt: new Date()
+//       },
+//       {
+//         firstName: 'fakak',
+//         lastName: 'coco',
+//         email: 'user2@user.io',
+//         username: 'FakeUser2',
+//         hashedPassword: bcrypt.hashSync('password3', 10),
+//         createdAt: new Date(),
+//         updatedAt: new Date()
+//       }
+//     ]);
+//   },
+
+//   down: async (queryInterface, Sequelize) => {
+//     const Op = Sequelize.Op;
+//     return queryInterface.bulkDelete('Users', {
+//       username: { [Op.in]: ['Demo-lition', 'FakeUser1', 'FakeUser2'] }
+//     }, {});
+//   }
+// };
