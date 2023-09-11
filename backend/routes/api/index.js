@@ -22,4 +22,9 @@ router.use('/bookings', bookingsRouter);
 router.use('/spot-images', spotImages);
 router.use('/review-images', reviewImages);
 
+
+router.post('/test', (req, res) => {
+    res.json({ requestBody: req.body });
+  });
+
 module.exports = router;
