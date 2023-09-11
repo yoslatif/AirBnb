@@ -35,28 +35,45 @@ async function getSpots(req, filterByCurrentUser = false) {
         where: {}
     }
 
-    if (filterByCurrentUser) options.where.ownerId = req.user.id;
-    else {
-        let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
-        page = page ? +page : 1;
-        size = size ? +size : 100;
+    if (filterByCurrentUser) {
+        options.where.ownerId = req.user.id;
+    } else {
+        const { page: queryPage, size: querySize, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
+        
+        const page = Number(queryPage) || 1;
+        const size = Number(querySize) || 100;
+    
         req.query.page = page;
         req.query.size = size;
+        
         options.limit = size;
         options.offset = (page - 1) * size;
-
-        if (minLat && maxLat) options.where.lat = { [Op.between]: [+minLat, +maxLat] };
-        else if (minLat) options.where.lat = { [Op.gte]: +minLat };
-        else if (maxLat) options.where.lat = { [Op.lte]: +maxLat };
-
-        if (minLng && maxLng) options.where.lng = { [Op.between]: [+minLng, +maxLng] };
-        else if (minLng) options.where.lng = { [Op.gte]: +minLng };
-        else if (maxLng) options.where.lng = { [Op.lte]: +maxLng };
-
-        if (minPrice && maxPrice) options.where.price = { [Op.between]: [+minPrice, +maxPrice] };
-        else if (minPrice) options.where.price = { [Op.gte]: +minPrice };
-        else if (maxPrice) options.where.price = { [Op.lte]: +maxPrice };
+        
+        if (minLat !== undefined && maxLat !== undefined) {
+            options.where.lat = { [Op.between]: [Number(minLat), Number(maxLat)] };
+        } else if (minLat !== undefined) {
+            options.where.lat = { [Op.gte]: Number(minLat) };
+        } else if (maxLat !== undefined) {
+            options.where.lat = { [Op.lte]: Number(maxLat) };
+        }
+        
+        if (minLng !== undefined && maxLng !== undefined) {
+            options.where.lng = { [Op.between]: [Number(minLng), Number(maxLng)] };
+        } else if (minLng !== undefined) {
+            options.where.lng = { [Op.gte]: Number(minLng) };
+        } else if (maxLng !== undefined) {
+            options.where.lng = { [Op.lte]: Number(maxLng) };
+        }
+        
+        if (minPrice !== undefined && maxPrice !== undefined) {
+            options.where.price = { [Op.between]: [Number(minPrice), Number(maxPrice)] };
+        } else if (minPrice !== undefined) {
+            options.where.price = { [Op.gte]: Number(minPrice) };
+        } else if (maxPrice !== undefined) {
+            options.where.price = { [Op.lte]: Number(maxPrice) };
+        }
     }
+    
 
     const spots = await Spot.findAll(options);
     for (let i = 0; i < spots.length; i++) {
