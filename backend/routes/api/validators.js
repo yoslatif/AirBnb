@@ -20,7 +20,9 @@ async function analyzeErrors(req, res, validHandler) {
     }
 }
 
+// Array of middleware for validating signup details
 const validateSignup = [
+    // Validating the 'email' field with custom and built-in validators
     check('email')
         .custom(async (email, { req }) => {
             const user = await User.findOne({ where: { email } });
