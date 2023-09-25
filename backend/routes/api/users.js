@@ -5,22 +5,6 @@ const { validateSignup, analyzeErrors } = require('../api/validators.js');
 
 const router = express.Router();
 
-
-// // POST route handler for user signup
-// router.post('/', validateSignup, async (req, res) => {
-
-//     analyzeErrors(req, res, async () => {
-    
-//         const { email, password, username, firstName, lastName } = req.body;
-       
-//         const user = await User.signup({ email, username, password, firstName, lastName });
-       
-//         const token = setTokenCookie(res, user);
-
-//         return res.json({ ...user.toSafeObject() });
-//     })
-// });
-
 // POST route handler for user signup
 router.post('/', validateSignup, async (req, res) => {
     // Analyzes any validation errors and proceeds with user signup if validation succeeds

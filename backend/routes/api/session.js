@@ -8,26 +8,6 @@ const { validateLogin, analyzeErrors } = require('../api/validators.js');
 
 const router = express.Router();
 
-// // Log in
-// router.post('/', validateLogin, async (req, res, next) => {
-//     analyzeErrors(req, res, async () => {
-//         const { credential, password } = req.body;
-
-//         const user = await User.login({ credential, password });
-
-//         if (!user) {
-//             return res.status(401).json({
-//                 "message": "Invalid credentials",
-//                 "statusCode": 401
-//             })
-//         }
-
-//         const token = setTokenCookie(res, user);
-
-//         return res.json({ ...user.toJSON() });
-//     })
-// });
-
 // Log in
 router.post('/', validateLogin, async (req, res, next) => {
     analyzeErrors(req, res, async () => {
@@ -57,20 +37,14 @@ router.post('/', validateLogin, async (req, res, next) => {
     })
 });
 
-
 // Log out
 router.delete('/', (_req, res) => {
     res.clearCookie('token');
     return res.json({ message: 'success' });
 });
 
-// // Restore session user
-// router.get('/', requireAuthentication, (req, res) => {
-//     res.json(req.user.toSafeObject());
-// });
-
 // Restore session user
-router.get('/', requireAuthentication, (req, res) => {
+router.get('/', (req, res) => {
     if (req.user) {
         // If there is an authenticated user, return their details
         const userResponse = {

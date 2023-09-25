@@ -5,7 +5,6 @@ import sessionReducer from './session';
 
 const rootReducer = combineReducers({
   session: sessionReducer
-  // ... other reducers will go here in the future
 });
 
 
