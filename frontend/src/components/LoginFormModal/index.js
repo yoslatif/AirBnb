@@ -11,6 +11,9 @@ function LoginFormModal() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
+  const [showModal, setShowModal] = useState(false);
+  const [isLoginDisabled, setIsLoginDisabled] = useState(true);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -24,6 +27,17 @@ function LoginFormModal() {
         }
       });
   };
+
+  const toggleModal = () => {
+    setShowModal(prevState => !prevState);
+  };
+
+  const handleDemoLogin = () => {
+    setCredential('demoUser');
+    setPassword('demoPassword');
+    // Trigger the login action here
+};
+
 
   return (
     <>
@@ -50,7 +64,10 @@ function LoginFormModal() {
         {errors.credential && (
           <p>{errors.credential}</p>
         )}
-        <button type="submit">Log In</button>
+        {/* <button type="submit">Log In</button> */}
+        <button onClick={toggleModal}>Log in</button>
+        <button onClick={handleDemoLogin}>Log in as Demo User</button>
+
       </form>
     </>
   );
