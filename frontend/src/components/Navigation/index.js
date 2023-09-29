@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import logo from './airbnb-logo-62A2938175-seeklogo.com.png';
+import { useHistory } from 'react-router-dom';
 import { logout } from '../../store/session';
 
 import './Navigation.css';
@@ -40,18 +41,26 @@ function Navigation( isLoaded) {
 
   const dispatch = useDispatch();
 
+  const currentUser = useSelector(state => state.session.user);
+
+  const history = useHistory();
+
   return (
       <nav>
+        <div>
           <NavLink to="/">
               <img src={logo} alt="App Logo" className="app-logo" />
           </NavLink>
+        </div>
           {/* Other navigation items */}
+          {currentUser && (
+  <button onClick={() => history.push('/create-spot')}>Create a New Spot</button>
+)}
           <div className="menu-dropdown" onClick={toggleDropdown}>
-              Menu
+              ===MENU===
               {showDropdown && (
                   <div className="dropdown-content">
                       <ProfileButton user={sessionUser} />
-                      <button onClick={() => dispatch(logout())}>Log Out</button>
                   </div>
               )}
           </div>

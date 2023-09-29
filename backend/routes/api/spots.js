@@ -102,6 +102,7 @@ router.get('/current', requireAuthentication, async (req, res) => {
 });
 
 router.post('/', requireAuthentication, validateSpot, async (req, res) => {
+    console.log(req.headers);
     analyzeErrors(req, res, async () => {
         const { address, city, state, country, lat, lng, name, description, price } = req.body;
         const record = await Spot.create({ ownerId: req.user.id, address, city, state, country, lat, lng, name, description, price });

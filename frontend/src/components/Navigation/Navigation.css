@@ -8,6 +8,9 @@
 }
 
 .app-logo {
+    position: absolute;
+    top: 10;
+    left: 10;
     height: 50px; /* Adjust size as needed */
     cursor: pointer;
 }

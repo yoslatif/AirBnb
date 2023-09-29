@@ -15,15 +15,26 @@ const isProduction = environment === 'production';
 
 const app = express();
 
+if (!isProduction) {
+    // enable cors only in development
+    app.use(cors({
+        origin: 'http://localhost:3000',
+        methods: ['GET', 'POST', 'PUT', 'DELETE'],
+        allowedHeaders: ['Content-Type', 'Authorization'],
+        credentials: true,
+        optionsSuccessStatus: 200
+      }));
+      
+}
+
+app.options('*', cors());
+
+
 app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(express.json());
 
-// Security Middleware
-if (!isProduction) {
-    // enable cors only in development
-    app.use(cors());
-}
+
 
 // helmet helps set a variety of headers to better secure your app
 app.use(
