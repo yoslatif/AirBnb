@@ -80,6 +80,7 @@ const validateSignup = [
         .withMessage('Password must be 6 characters or more.'),
 ];
 
+
 const validateLogin = [
     check('credential')
         .exists({ checkFalsy: true })
