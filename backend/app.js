@@ -20,7 +20,7 @@ if (!isProduction) {
     app.use(cors({
         origin: 'http://localhost:3000',
         methods: ['GET', 'POST', 'PUT', 'DELETE'],
-        allowedHeaders: ['Content-Type', 'Authorization'],
+        allowedHeaders: ['Content-Type', 'Authorization', 'XSRF-Token'],
         credentials: true,
         optionsSuccessStatus: 200
       }));
@@ -73,8 +73,8 @@ app.use((_req, _res, next) => {
 app.use((err, _req, _res, next) => {
     // check if error is a Sequelize error:
     if (err instanceof ValidationError) {
-        err.errors = err.errors.map((e) => e.message);
-        err.title = 'Validation error';
+        err.errors = err.errors.map((e) => e);
+        err.title = 'Sequelize error';
     }
     next(err);
 });
