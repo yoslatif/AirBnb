@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import { useHistory } from "react-router-dom";
+import csrfFetch from "../../store/csrf"
 
 function CreateSpotForm() {
   const [country, setCountry] = useState("");
@@ -97,27 +98,40 @@ function CreateSpotForm() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        country,
+        // country,
+        // address,
+        // city,
+        // state,
+        // description,
+        // name: spotName,
+        // price,
         address,
         city,
         state,
+        country,
+        lat: "23.24242422",
+        lng: "123.2323232",
+        name: spotName,
         description,
-        spotName,
         price,
-        previewImageURL,
-        otherImages,
+        // previewImageURL,
+        // otherImages,
       }),
     };
 
-    fetch('http://localhost:8000/api/spots', requestOptions)
+    console.log(typeof(requestOptions))
+
+   csrfFetch('http://localhost:8000/api/spots', requestOptions)
       .then((response) => response.json())
       .then((data) => {
+  
         const newSpotId = data.id;
         // If successful, navigate to the new spot's detail page...
         history.push(`/spots/${newSpotId}`);
       })
       .catch((error) => {
         console.error("Error creating spot:", error);
+
       });
     setIsLoading(false);
     setIsSuccess(true);
