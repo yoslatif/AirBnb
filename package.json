@@ -26,6 +26,7 @@
     "cross-env": "^7.0.3",
     "express-validator": "^7.0.1",
     "mysql2": "^3.6.0",
+    "react-modal": "^3.16.1",
     "sequelize": "^6.33.0"
   },
   "devDependencies": {
