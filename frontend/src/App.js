@@ -1,37 +1,24 @@
-import React, { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
-import * as sessionActions from "./store/session";
-import Navigation from "./components/Navigation";
-import SpotList from "./components/Spots/SpotList";  // Import the SpotList component
-import SpotDetail from './components/Spots/SpotDetail';
-import CreateSpotForm from './components/Spots/CreateSpotForm';
 
-function App() {
+import { restoreUser } from "./store/session";
+import SpotGrid from "./components/SpotGrid/SpotGrid";
+import SpotDetails from "./components/SpotDetails/SpotDetails";
+import Modals from './components/Modals';
+
+export default function App() {
   const dispatch = useDispatch();
-  const [isLoaded, setIsLoaded] = useState(false);
-  useEffect(() => {
-    dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
-  }, [dispatch]);
+  useEffect(() => { dispatch(restoreUser()) }, [dispatch]);
 
   return (
-    <>
-      <Navigation isLoaded={isLoaded} />
-      {isLoaded && (
-        <Switch>
-          <Route path="/" exact>
-            <SpotList />
-          </Route>
-          <Route path="/spots/:id" component={SpotDetail} />
-          <Route path="/create-spot" component={CreateSpotForm} />
-          {/* other routes */}
-        </Switch>
-      )}
-    </>
+    <div >
+      <Modals />
+      <Switch>
+        <Route exact path="/"><SpotGrid /></Route>
+        <Route path="/spots/:spotId"><SpotDetails /></Route>
+        <Route path="*"><SpotDetails /></Route>
+      </Switch>
+    </div>
   );
 }
-
-export default App;
-
-
-
