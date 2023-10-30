@@ -49,7 +49,7 @@ export const postSpot = (body, url) => async () => {
 
 export const deleteSpot = (spotId) => async (dispatch) => {
   try {
-      const response = await fetch(`/api/spots/${spotId}`, {
+      const response = await csrfFetch(`/api/spots/${spotId}`, {
           method: 'DELETE',
       });
 

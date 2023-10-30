@@ -19,10 +19,6 @@ export default function SpotDetails() {
     const padding = useSelector(state => state.ui.padding);
     const spotDetails = useSelector(state => state.spotDetails);
 
-    console.log('some name', reviews, padding, spotDetails);
-    if(reviews & padding & spotDetails){
-        console.log("some name erororoor", reviews, padding, spotDetails)
-    }
 
     useEffect(() => {
         dispatch(getSpotDetails(spotId));
@@ -90,7 +86,6 @@ export default function SpotDetails() {
                     </div>
                     <div className="SpotDetailsLine2"></div>
                 </div>
-                {console.log('rewkjdkjdk1', reviews)}
                 <Reviews spot={spotDetails} reviews={reviews} />
                 {reviews==null?
                     " "
