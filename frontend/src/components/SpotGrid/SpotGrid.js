@@ -9,6 +9,8 @@ import SpotGridItem from "./SpotGridItem";
 import { clearSpotDetails } from "../../store/spotDetails";
 import { resetPadding, setHeaderPosition } from "../../store/ui";
 import Header from "../Header/Header";
+import { deleteSpot } from "../../store/spots";
+
 
 export default function SpotGrid() {
     const dispatch = useDispatch();
@@ -23,6 +25,10 @@ export default function SpotGrid() {
         dispatch(setSpotForEditing(spot))
         console.log('editData', spot)
     }
+    const handleDelete = (spotId) => {
+        dispatch(deleteSpot(spotId));
+    };
+    
 
     
     useEffect(() => {
@@ -46,7 +52,8 @@ export default function SpotGrid() {
                         <span>
                             <div className="EditDelete">
                                 <div style={{color:'green'}} onClick={() => editData(spot)}>Update</div>
-                                <div style={{color:'red'}}>Delete</div>
+                                <div style={{color:'red'}} onClick={() => handleDelete(spot.id)}>Delete</div>
+
                             </div>
                             <NavLink key={i} to={`/spots/${spot.id}`} style={{ textDecoration: 'none' }}>
                                 <SpotGridItem spot={spot} />

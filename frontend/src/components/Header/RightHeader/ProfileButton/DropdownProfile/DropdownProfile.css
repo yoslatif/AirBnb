@@ -33,6 +33,10 @@
     flex-direction: column;
     justify-content: center;
 }
+.dropdownInfo:hover {
+    background-color: #f7f7f7;
+    cursor: pointer;
+}
 
 .dropdownButton {
     height: 100%;

@@ -47,10 +47,28 @@ export const postSpot = (body, url) => async () => {
     return spot;
 };
 
-export const deleteSpot = (spotId) => async () => {
-    const response = await csrfFetch('/api/spots/' + spotId, { method: "DELETE", });
-    return await response.json();
+export const deleteSpot = (spotId) => async (dispatch) => {
+  try {
+      const response = await fetch(`/api/spots/${spotId}`, {
+          method: 'DELETE',
+      });
+
+      if (!response.ok) {
+          throw response;
+      }
+
+      dispatch(removeSpot(spotId));
+      return null;
+  } catch (err) {
+      console.error(err);
+      return err;
+  }
 };
+
+export const removeSpot = (spotId) => ({
+  type: 'REMOVE_SPOT',
+  spotId,
+});
 
 export const putSpot = (spotId, body) => async () => {
     body.lat = 100;
@@ -69,6 +87,10 @@ export default function spotsReducer(state = {}, action) {
                 spots[spot.id] = spot;
                 return spots;
             }, {});
+            case 'REMOVE_SPOT':
+    const newState = { ...state };
+    delete newState[action.spotId];
+    return newState;
         default:
             return state;
     }

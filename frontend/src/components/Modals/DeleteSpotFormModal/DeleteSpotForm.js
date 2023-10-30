@@ -12,6 +12,7 @@ export default function DeleteSpotForm() {
     const [errors, setErrors] = useState([]);
 
     const handleSubmit = (e) => {
+        console.log('Delete handler triggered');
         e.preventDefault();
         setErrors([]);
         return dispatch(deleteSpot(spotId))

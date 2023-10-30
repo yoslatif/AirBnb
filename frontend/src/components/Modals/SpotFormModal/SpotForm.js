@@ -115,12 +115,30 @@ export default function SpotForm({ spot }) {
 
             {!spot &&
                 < input
-                    className="field lastField"
+                    className="field"
                     type="url"
                     value={imageUrl}
                     onChange={(e) => setImageUrl(e.target.value)}
                     required
                     placeholder="Image url"
+                />}
+                {!spot &&
+                < input
+                    className="field"
+                    type="url"
+                    value={imageUrl}
+                    onChange={(e) => setImageUrl(e.target.value)}
+                    required
+                    placeholder="Image 2 url"
+                />}
+                {!spot &&
+                < input
+                    className="field lastField"
+                    type="url"
+                    value={imageUrl}
+                    onChange={(e) => setImageUrl(e.target.value)}
+                    required
+                    placeholder="Image 3 url"
                 />}
             <button type="submit" className="spotButton">{spot ? "Edit" : "Create"} spot</button>
         </form>
