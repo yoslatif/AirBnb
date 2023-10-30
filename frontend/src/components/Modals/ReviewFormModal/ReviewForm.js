@@ -70,7 +70,7 @@ export default function ReviewForm() {
             />
 
             <button className="reviewButton" type="submit">Leave a  review</button>
-            <button onClick={handleReserveClick}>Reserve</button>
+            <button className="reserveButton" onClick={handleReserveClick}>Reserve</button>
         </form>
     );
 }

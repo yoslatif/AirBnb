@@ -1,7 +1,8 @@
 import SpotFormModal from './SpotFormModal/SpotFormModal';
 import EditSpotFormModal from './SpotFormModal/EditSpotFormModal';
 import ReviewFormModal from './ReviewFormModal/ReviewFormModal';
-import DeleteSpotForm from './DeleteSpotFormModal/DeleteSpotFormModal';
+import { DeleteSpotFormModal as DeleteSpotForm } from './DeleteSpotFormModal/DeleteSpotFormModal';
+
 import LoginFormModal from './LoginFormModal/LoginFormModal';
 import SignupFormModal from './SignupFormModal/SignupFormModal';
 import { useSelector } from 'react-redux';
