@@ -11,8 +11,6 @@ export default function SpotGridItem({ spot }) {
         </div>
                 </div>
                 <div className="SpotGridItemSubtext">
-                    <div>185 miles away</div>
-                    <div>Feb 5 – 10</div>
                 </div>
                 <div className="SpotGridItemPrice"><strong>${spot.price}</strong> night</div>
             </div>
