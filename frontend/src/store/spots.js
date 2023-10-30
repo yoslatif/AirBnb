@@ -2,6 +2,25 @@ import { csrfFetch } from './csrf';
 
 const GET_SPOTS = 'spots/GET_SPOTS';
 
+export const getUserSpots = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: 'SPOTS_REQUEST' });
+    const { authentication: { token } } = getState();
+    const response = await csrfFetch('/api/spots/current', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    if (response.ok) {
+      dispatch({ type: 'SPOTS_SUCCESS', payload: data.Spots });
+    } else {
+      dispatch({ type: 'SPOTS_FAILURE', payload: data.errors });
+    }
+  } catch (error) {
+    dispatch({ type: 'SPOTS_FAILURE', payload: error.message });
+  };
+};
 export const getSpots = () => async dispatch => {
     const response = await csrfFetch('/api/spots');
 

@@ -180,7 +180,6 @@ router.get('/:spotId/reviews', restoreSpot, async (req, res) => {
     };
     const reviews = await Review.findAll(options);
     for (let i = 0; i < reviews.length; i++) {
-        // TODO: Setup PG locally to find the right Sequelize syntax to avoid this loop
         const review = reviews[i].toJSON();
         if (review.Spot) {
             reviews[i] = review;
