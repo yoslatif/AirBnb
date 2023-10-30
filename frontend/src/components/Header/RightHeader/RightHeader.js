@@ -1,6 +1,6 @@
 import "./RightHeader.css";
 import { useDispatch, useSelector } from "react-redux";
-import { setSpotModal } from '../../../store/ui';
+import { setSpotModal, setSpotForEditing } from '../../../store/ui';
 import ProfileButton from "./ProfileButton/ProfileButton";
 
 export default function RightHeader() {
@@ -12,7 +12,7 @@ export default function RightHeader() {
         {<div className="rightHeader">
             {sessionUser && <button
                 className="createASpot button"
-                onClick={() => dispatch(setSpotModal(true))}>Create a Spot
+                onClick={() => {dispatch(setSpotModal(true)); dispatch(setSpotForEditing(null)) }}>Create a Spot
             </button>}
             <ProfileButton user={sessionUser} />
         </div>}

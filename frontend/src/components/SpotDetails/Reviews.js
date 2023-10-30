@@ -11,7 +11,17 @@ export default function Reviews({ spot, reviews }) {
     return <div>
         <ReviewHeader user={user} reviews={reviews} spot={spot} userReviewed={userReviewed} userOwnsSpot={userOwnsSpot} />
         <div className="reviews">
-            {reviews.map((review, i) => <Review key={i} review={review} user={user} />)}
+
+            {reviews.length === 0 && user && !userOwnsSpot ? (
+  <div>Be the first to post a review!</div>
+) : (
+  <div className="reviews">
+    {reviews.map((review, i) => (
+      <Review key={i} review={review} user={user} />
+    ))}
+  </div>
+)}
+
         </div>
     </div>
 }

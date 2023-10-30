@@ -5,7 +5,7 @@ import { Redirect } from "react-router-dom";
 import * as sessionActions from "../../../store/session";
 import { setSignupModal } from "../../../store/ui";
 
-export default function SignupForm() {
+function SignupForm() {
     const dispatch = useDispatch();
     const sessionUser = useSelector((state) => state.session.user);
     const [firstName, setFirstName] = useState("");
@@ -15,8 +15,11 @@ export default function SignupForm() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [errors, setErrors] = useState([]);
+    const isFormValid = firstName && lastName && email && username.length >= 4 && password.length >= 6 && password === confirmPassword;
 
-    if (sessionUser) return <Redirect to="/" />;
+    console.log('sessionUser rizwan', sessionUser)
+
+    if (sessionUser.user) return <Redirect to="/" />;
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -91,7 +94,9 @@ export default function SignupForm() {
                 placeholder="Confirm password"
                 required
             />
-            <button type="submit" className="signupButton">Continue</button>
+            <button type="submit" className="signupButton" disabled={!isFormValid}>Sign Up!</button>
         </form>
     );
 }
+
+export default SignupForm;

@@ -14,6 +14,26 @@
     width: 100%;
 }
 
+.TextCenter{
+    text-align: center;
+    width: 100%;
+    line-height: 46px;
+    position: relative;
+    top: 94px;
+}
+.EditDelete{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 10px;
+}
+
+.EditDelete div{
+    cursor: pointer;
+    margin: 0 10px;
+}
+
 @media screen and (min-width: 1880px) {
     .homepageHeader {
         padding-left: 80px;

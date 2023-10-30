@@ -6,6 +6,7 @@ import SignupForm from './SignupForm';
 function SignupFormModal() {
     const dispatch = useDispatch();
     const showSignupModal = useSelector(state => state.ui.showSignupModal);
+    console.log('showSignupModal', SignupForm)
     return showSignupModal ?
         (
             <Modal onClose={() => dispatch(setSignupModal(false))}>
@@ -13,7 +14,7 @@ function SignupFormModal() {
             </Modal>
         ) :
         (
-            <div onClick={() => dispatch(setSignupModal(true))}>Sign up</div>
+            <div className="bold" onClick={() => dispatch(setSignupModal(true))}>Sign up</div>
         );
 }
 
