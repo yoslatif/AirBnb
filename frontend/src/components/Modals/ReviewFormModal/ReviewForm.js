@@ -28,6 +28,10 @@ export default function ReviewForm() {
         }
     };
 
+    const handleReserveClick = () => {
+        alert("Feature coming soon");
+      };
+
     return (
         <form className="reviewForm" onSubmit={handleSubmit}>
             <div className="reviewHeader">
@@ -66,6 +70,7 @@ export default function ReviewForm() {
             />
 
             <button className="reviewButton" type="submit">Leave a  review</button>
+            <button onClick={handleReserveClick}>Reserve</button>
         </form>
     );
 }

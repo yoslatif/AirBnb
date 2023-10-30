@@ -7,6 +7,7 @@ import { postSpot, putSpot } from "../../../store/spots";
 import { setSpotForEditing, setSpotModal } from "../../../store/ui";
 
 export default function SpotForm({ spot }) {
+    console.log('spotspotspot', spot)
     const [address, setAddress] = useState(spot ? spot.address : "");
     const [city, setCity] = useState(spot ? spot.city : "");
     const [state, setState] = useState(spot ? spot.state : "");
@@ -32,6 +33,7 @@ export default function SpotForm({ spot }) {
                 await dispatch(putSpot(spot.id, body));
                 dispatch(getSpotDetails(spot.id));
                 dispatch(setSpotForEditing(null));
+                history.push("/spots/" + spot.id);
             } else {
                 const spot = await dispatch(postSpot(body, imageUrl));
                 history.push("/");

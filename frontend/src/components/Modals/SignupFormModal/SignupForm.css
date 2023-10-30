@@ -53,3 +53,8 @@
 
     align-self: center;
 }
+
+.signupButton:disabled {
+    opacity: 0.2;
+    cursor: not-allowed;
+}

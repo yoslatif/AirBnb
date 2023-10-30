@@ -49,7 +49,7 @@ function LoginForm() {
                 setCredential("Demo-lition");
                 setPassword("password");
             }}>Log in as demo user</button>
-            <button type="submit" className="loginButton">Continue</button>
+            <button type="submit" className="loginButton">Log In</button>
         </form>
     );
 }

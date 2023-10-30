@@ -17,6 +17,7 @@ export default function App() {
       <Switch>
         <Route exact path="/"><SpotGrid /></Route>
         <Route path="/spots/:spotId"><SpotDetails /></Route>
+        <Route path="/spotsgrid"><SpotGrid /></Route>
         <Route path="*"><SpotDetails /></Route>
       </Switch>
     </div>
