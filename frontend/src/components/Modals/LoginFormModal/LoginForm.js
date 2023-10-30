@@ -25,7 +25,7 @@ function LoginForm() {
                 <div>Log in</div>
             </div>
             <div className="line"></div>
-            <div className="loginTitle">Welcome to BedNoBreakfast</div>
+            <div className="loginTitle">Welcome to YosBnb</div>
             {errors.length > 0 && <ul className="formErrors">
                 {errors.map((error, idx) => <li key={idx}>{error}</li>)}
             </ul>}

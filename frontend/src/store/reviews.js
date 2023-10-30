@@ -20,7 +20,7 @@ export const postReview = (spotId, body) => async (dispatch) => {
     const review = await response.json();
     dispatch(getSpotDetails(review.spotId));
     dispatch(setReviewModal(false));
-    await dispatch(getReviews(spotId));  // TODO: Instead of hitting the backend, just insert the new review into the Redux store.
+    await dispatch(getReviews(spotId));  
     window.scrollTo(0, document.body.scrollHeight);
     return review;
 };
@@ -32,10 +32,39 @@ export const deleteReview = (review) => async (dispatch) => {
     dispatch(getSpotDetails(review.spotId));
 };
 
+// export const deleteReview = (reviewId) => async dispatch => {
+//     try {
+//         const response = await csrfFetch(`/api/reviews/${reviewId}`, {
+//             method: 'DELETE',
+//         });
+
+//         if (response.ok) {
+//             dispatch(removeReview(reviewId));
+//             return null;
+//         } else {
+//             const data = await response.json();
+//             return data.errors;
+//         }
+//     } catch (err) {
+//         console.error("Failed to delete review:", err);
+//     }
+// };
+
+const removeReview = (reviewId) => ({
+    type: 'REMOVE_REVIEW',
+    payload: reviewId
+});
+
+
 export default function reviewsReducer(state = null, action) {
     switch (action.type) {
         case GET_REVIEWS:
             return action.reviews;
+        case 'REMOVE_REVIEW':
+            const newState = { ...state };
+            delete newState[action.payload];
+            return newState;
+            
         default:
             return state;
     }
