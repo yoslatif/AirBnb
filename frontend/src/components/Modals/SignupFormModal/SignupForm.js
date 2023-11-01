@@ -19,7 +19,7 @@ function SignupForm() {
 
     console.log('sessionUser rizwan', sessionUser)
 
-    if (sessionUser.user) return <Redirect to="/" />;
+    if (sessionUser?.user) return <Redirect to="/" />;
 
     const handleSubmit = (e) => {
         e.preventDefault();

@@ -6,6 +6,7 @@ import DropdownProfile from "./DropdownProfile/DropdownProfile";
 
 export default function ProfileButton({ user }) {
     
+    
         console.log('ProfileButton user:', user);
     const [showMenu, setShowMenu] = useState(false);
     const ui = useSelector(state => state.ui);
@@ -23,7 +24,7 @@ export default function ProfileButton({ user }) {
                 <i className="fa-solid fa-bars" />
                 <i className="fas fa-user-circle" />
             </button>
-            {showMenu && <DropdownProfile ui={ui} user={user.user} />}
+            {showMenu && <DropdownProfile ui={ui} user={user?.user} />}
         </>
     );
 }

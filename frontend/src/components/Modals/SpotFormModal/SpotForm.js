@@ -27,27 +27,39 @@ export default function SpotForm({ spot }) {
 
     const history = useHistory();
 
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setErrors([]);
-        try {
-            const body = { address, city, state, country, name, description, price, images: [imageUrl1, imageUrl2, imageUrl3] };
-            if (spot) {
-                await dispatch(putSpot(spot.id, body));
-                dispatch(getSpotDetails(spot.id));
-                dispatch(setSpotForEditing(null));
-                history.push("/spots/" + spot.id);
-            } else {
-                const spot = await dispatch(postSpot(body, imageUrl1));
-                history.push("/");
-                history.push("/spots/" + spot.id);
+        let newErrors = [];
+    
+        // Validation check for description length
+        if (description.length < 30) {
+            newErrors.push("Please write a description of at least 30 characters");
+        }
+    
+        if (newErrors.length === 0) {
+            try {
+                const body = { address, city, state, country, name, description, price, images: [imageUrl1, imageUrl2, imageUrl3] };
+                if (spot) {
+                    await dispatch(putSpot(spot.id, body));
+                    dispatch(getSpotDetails(spot.id));
+                    dispatch(setSpotForEditing(null));
+                    history.push("/spots/" + spot.id);
+                } else {
+                    const spot = await dispatch(postSpot(body, imageUrl1, imageUrl2, imageUrl3));
+                    history.push("/");
+                    history.push("/spots/" + spot.id);
+                }
+                dispatch(setSpotModal(false));
             }
-            dispatch(setSpotModal(false));
+            catch (errors) {
+                newErrors = newErrors.concat(Object.values(errors.errors));
+            }
         }
-        catch (errors) {
-            setErrors(Object.values(errors.errors))
-        }
+    
+        setErrors(newErrors);
     };
+    
 
     return (
         <form className="spotForm" onSubmit={handleSubmit}>
@@ -100,13 +112,13 @@ export default function SpotForm({ spot }) {
                 placeholder="Name"
             />
             <textarea
-                className="field"
-                style={{ height: "125px" }}
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                required
-                placeholder="Description"
-            />
+    className="field"
+    style={{ height: "125px" }}
+    value={description}
+    onChange={(e) => setDescription(e.target.value)}
+    required
+    placeholder="Please describe your BnB!"
+/>
             <input
                 className={`field ${spot && "lastField"}`}
                 type="number"
@@ -123,7 +135,7 @@ export default function SpotForm({ spot }) {
                     value={imageUrl1}
                     onChange={(e) => setImageUrl1(e.target.value)}
                     required
-                    placeholder="Image url"
+                    placeholder="Preview Image URL"
                 />}
                 {!spot &&
                 < input
@@ -131,7 +143,7 @@ export default function SpotForm({ spot }) {
                     type="url"
                     value={imageUrl2}
                     onChange={(e) => setImageUrl2(e.target.value)}
-                    placeholder="Image 2 url"
+                    placeholder="Image Url"
                 />}
                 {!spot &&
                 < input
@@ -139,7 +151,7 @@ export default function SpotForm({ spot }) {
                     type="url"
                     value={imageUrl3}
                     onChange={(e) => setImageUrl3(e.target.value)}
-                    placeholder="Image 3 url"
+                    placeholder="Image Url"
                 />}
             <button type="submit" className="spotButton">{spot ? "Edit" : "Create"} spot</button>
         </form>
