@@ -50,6 +50,11 @@
     animation: colorChange 5s infinite;
 }
 
+.logoimg {
+    margin-right: 7px;
+    animation: colorChange 5s infinite;
+}
+
 .leftHeader {
     display: flex;
     gap: 4px;

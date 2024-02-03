@@ -6,7 +6,7 @@ export default function Logo() {
     return (
         <Link exact="true" to="/" style={{ textDecoration: 'none' }} className="leftHeader">
             <img height="32px" src=""/>
-            <img height="32px" src={logoPath} alt="YosBnb Logo"/>
+            <img height="32px" src={logoPath} alt="YosBnb Logo" className="logoimg"/>
             <span id="logo">YosBnb</span>
         </Link>
     )
