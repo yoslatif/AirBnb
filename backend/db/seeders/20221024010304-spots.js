@@ -28,6 +28,9 @@ module.exports = {
         "description": "Very beautiful, great vibes.",
         "price": 502
       },
+      {
+        
+      }
     ], {});
   },
 

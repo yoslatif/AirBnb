@@ -97,19 +97,6 @@ export default function SpotGrid() {
             </NavLink>
           )
         )}
-        {console.log("useParams", window.location.pathname == "/spotsgrid")}
-        {location.pathname == "/spotsgrid"
-  ? spots.length > 0
-    ? sessionUser && (
-        <button
-          className="createASpot button"
-          onClick={() => dispatch(setSpotModal(true))}
-        >
-          Create a Spot
-        </button>
-      )
-    : ""
-  : ""}
 
       </div>
     </>
