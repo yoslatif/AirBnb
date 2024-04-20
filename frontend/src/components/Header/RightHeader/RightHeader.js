@@ -7,6 +7,8 @@ export default function RightHeader() {
   const session = useSelector((state) => state.session);
   const sessionUser = session.user ? session.user : null;
 
+  
+
   console.log("RightHeader sessionUser:", sessionUser);
   const dispatch = useDispatch();
   return (
@@ -19,8 +21,9 @@ export default function RightHeader() {
               onClick={() => {
                 dispatch(setSpotModal(true));
                 dispatch(setSpotForEditing(null));
+
               }}>
-              Create a Spot
+              Create a Spot!!!
             </button>
           )}
           <ProfileButton user={sessionUser} />
@@ -28,4 +31,4 @@ export default function RightHeader() {
       }
     </span>
   );
-}
+};

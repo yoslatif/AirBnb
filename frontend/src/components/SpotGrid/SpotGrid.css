@@ -4,6 +4,11 @@
     row-gap: 40px;
 }
 
+.SpotGrid:hover {
+    cursor: pointer;
+    
+}
+
 .SpotGridItem {
     width: 100%;
 }
@@ -12,6 +17,17 @@
     object-fit: cover;
     border-radius: 12px;
     width: 100%;
+}
+
+.SpotGridItem img {
+    object-fit: cover;
+    border-radius: 12px;
+    width: 100%;
+    transition: filter 0.3s ease;  /* Smooth transition for the filter effect */
+}
+
+.SpotGridItem img:hover {
+    filter: brightness(1.2);  /* Increase brightness by 20% on hover */
 }
 
 .TextCenter{
