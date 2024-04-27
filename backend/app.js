@@ -5,6 +5,8 @@ const cors = require('cors');
 const csurf = require('csurf');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
+const session = require('express-session');
+
 
 const { ValidationError } = require('sequelize');
 
@@ -33,6 +35,12 @@ app.options('*', cors());
 app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(express.json());
+app.use(session({
+    secret: 'your secret key', // Secret key for signing the session ID cookie
+    resave: false,            // Do not resave sessions that haven't changed
+    saveUninitialized: false, // Do not save uninitialized sessions
+    cookie: { secure: true }  // Use secure cookies (requires HTTPS)
+}));
 
 
 
