@@ -2,6 +2,7 @@
     display: grid;
     column-gap: 24px;
     row-gap: 40px;
+    padding-top: 120px;
 }
 
 .SpotGrid:hover {
@@ -17,6 +18,7 @@
     object-fit: cover;
     border-radius: 12px;
     width: 100%;
+    transition: filter 0.3s ease;  /* Smooth transition for the filter effect */
 }
 
 .SpotGridItem img {
@@ -261,4 +263,19 @@
 
 .SpotGridItemPrice {
     margin-top: 4px;
+}
+
+
+.SpotGridItem {
+    overflow: hidden;  /* Ensure the image doesn't spill out of the container */
+}
+
+.SpotGridItem img {
+    transition: transform 3s ease;  /* Smooth transition for the panning effect */
+    /* transform: scale(1.1);   */
+}
+
+.SpotGridItem img:hover {
+    filter: brightness(1.2);  /* Maintain the brightness effect */
+    transform: scale(1.1) translateY(-3%);  /* Translate the image upwards within the container */
 }
