@@ -17,12 +17,27 @@ import { deleteSpot } from "../../store/spots";
 import ConfirmationModal from '../Modals/ConfirmationModal/ConfirmationModal';
 
 
-export default function SpotGrid() {
+export default function SpotGrid({ searchTerm }) {
   const dispatch = useDispatch();
   const location = useLocation();
   const spots = useSelector((state) => Object.values(state.spots));
   const padding = useSelector((state) => state.ui.padding);
   const sessionUser = useSelector((state) => state.session.user);
+
+  useEffect(() => {
+    dispatch(getSpots());
+    dispatch(clearSpotDetails());
+    dispatch(resetPadding());
+    dispatch(setHeaderPosition("fixed"));
+  }, [dispatch]);
+
+  // Filter spots based on the search term
+  const filteredSpots = searchTerm ? spots.filter(spot =>
+    (spot.location && spot.location.toLowerCase().includes(searchTerm.toLowerCase())) ||
+    (spot.name && spot.name.toLowerCase().includes(searchTerm.toLowerCase()))
+  ) : spots;
+  
+  
 
   const editData = (spot) => {
     dispatch(setSpotForEditing(null));
@@ -51,6 +66,7 @@ export default function SpotGrid() {
         {location.pathname == "/spotsgrid" ? <h2>Manage Spots</h2> : ""}
       </div>
       <div className="SpotGrid">
+        
         {spots.map((spot, i) =>
           location.pathname == "/spotsgrid" ? (
             <span>
