@@ -1,5 +1,6 @@
 // SearchBar.js
 import React, { useState } from 'react';
+import './SearchBar.css'; // Make sure to include the CSS file
 
 export default function SearchBar({ onSearch }) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -10,7 +11,6 @@ export default function SearchBar({ onSearch }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Check if onSearch is passed and is a function
     if (typeof onSearch === 'function') {
       onSearch(searchTerm);
     } else {
@@ -19,14 +19,15 @@ export default function SearchBar({ onSearch }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="search-bar">
       <input
         type="text"
         placeholder="Search by location or name..."
         value={searchTerm}
         onChange={handleChange}
+        className="search-input"
       />
-      <button type="submit">Search</button>
+      <button type="submit" className="search-button">Search</button>
     </form>
   );
 }
