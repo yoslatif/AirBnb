@@ -1,29 +1,31 @@
-import { NavLink, useParams, useLocation } from "react-router-dom";
+// SpotGrid.js
+import { NavLink, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import {
-  setSpotModal,
+  getSpots,
+  deleteSpot,
+} from "../../store/spots";
+import { clearSpotDetails } from "../../store/spotDetails";
+import {
+  resetPadding,
+  setHeaderPosition,
   setEditSpotModal,
   setSpotForEditing,
 } from "../../store/ui";
-
-import "./SpotGrid.css";
-import { getSpots } from "../../store/spots";
-import SpotGridItem from "./SpotGridItem";
-import { clearSpotDetails } from "../../store/spotDetails";
-import { resetPadding, setHeaderPosition } from "../../store/ui";
 import Header from "../Header/Header";
-import { deleteSpot } from "../../store/spots";
-import ConfirmationModal from '../Modals/ConfirmationModal/ConfirmationModal';
-
+import ConfirmationModal from "../Modals/ConfirmationModal/ConfirmationModal";
+import SpotGridItem from "./SpotGridItem";
+import "./SpotGrid.css";
 
 export default function SpotGrid({ searchTerm }) {
   const dispatch = useDispatch();
   const location = useLocation();
   const spots = useSelector((state) => Object.values(state.spots));
-  const padding = useSelector((state) => state.ui.padding);
-  const sessionUser = useSelector((state) => state.session.user);
+  const [showDeleteSpotModal, setShowDeleteSpotModal] = useState(false);
+  const [spotIdToDelete, setSpotIdToDelete] = useState(null);
 
+  // Fetch spots and reset UI settings
   useEffect(() => {
     dispatch(getSpots());
     dispatch(clearSpotDetails());
@@ -31,45 +33,37 @@ export default function SpotGrid({ searchTerm }) {
     dispatch(setHeaderPosition("fixed"));
   }, [dispatch]);
 
-  // Filter spots based on the search term
-  const filteredSpots = searchTerm ? spots.filter(spot =>
-    (spot.location && spot.location.toLowerCase().includes(searchTerm.toLowerCase())) ||
-    (spot.name && spot.name.toLowerCase().includes(searchTerm.toLowerCase()))
-  ) : spots;
-  
-  
+  // Filter spots based on search term
+  const filteredSpots = searchTerm
+    ? spots.filter(
+        (spot) =>
+          (spot.location &&
+            spot.location.toLowerCase().includes(searchTerm.toLowerCase())) ||
+          (spot.name &&
+            spot.name.toLowerCase().includes(searchTerm.toLowerCase()))
+      )
+    : spots;
 
+  // Functions for editing and deleting spots
   const editData = (spot) => {
     dispatch(setSpotForEditing(null));
     dispatch(setEditSpotModal(true));
     dispatch(setSpotForEditing(spot));
-    console.log("editData", spot);
   };
+
   const handleDelete = (spotId) => {
     dispatch(deleteSpot(spotId));
   };
 
-  const [showDeleteSpotModal, setShowDeleteSpotModal] = useState(false);
-  const [spotIdToDelete, setSpotIdToDelete] = useState(null);
-
-  useEffect(() => {
-    dispatch(getSpots());
-    dispatch(clearSpotDetails());
-    dispatch(resetPadding());
-    dispatch(setHeaderPosition("fixed"));
-  }, [dispatch]);
-
   return (
     <>
-      <Header className="homepageHeader" />
       <div className="TextCenter">
-        {location.pathname == "/spotsgrid" ? <h2>Manage Spots</h2> : ""}
+        {location.pathname === "/spotsgrid" && <h2>Manage Spots</h2>}
       </div>
       <div className="SpotGrid">
-        
-        {spots.map((spot, i) =>
-          location.pathname == "/spotsgrid" ? (
-            <span>
+        {filteredSpots.map((spot, i) =>
+          location.pathname === "/spotsgrid" ? (
+            <span key={i}>
               <div className="EditDelete">
                 <div style={{ color: "green" }} onClick={() => editData(spot)}>
                   Update
@@ -96,7 +90,6 @@ export default function SpotGrid({ searchTerm }) {
                 </div>
               </div>
               <NavLink
-                key={i}
                 to={`/spots/${spot.id}`}
                 style={{ textDecoration: "none" }}
               >
@@ -113,11 +106,7 @@ export default function SpotGrid({ searchTerm }) {
             </NavLink>
           )
         )}
-
       </div>
     </>
   );
 }
-
-
-
