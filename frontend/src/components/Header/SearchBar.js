@@ -1,5 +1,4 @@
-// Header/SearchBar.js
-
+// SearchBar.js
 import React, { useState } from 'react';
 
 export default function SearchBar({ onSearch }) {
@@ -7,14 +6,17 @@ export default function SearchBar({ onSearch }) {
 
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
-};
+  };
 
-const handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    // Call onSearch function with the current search term
-    onSearch(searchTerm);
-};
-
+    // Check if onSearch is passed and is a function
+    if (typeof onSearch === 'function') {
+      onSearch(searchTerm);
+    } else {
+      console.error('onSearch is not defined or not a function');
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -27,4 +29,4 @@ const handleSubmit = (event) => {
       <button type="submit">Search</button>
     </form>
   );
-};
+}
