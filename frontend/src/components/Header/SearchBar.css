@@ -2,52 +2,67 @@
 
 /* Wrapper for the whole form */
 .search-bar {
-    display: flex;
-    align-items: center;
-    border-radius: 50px;
-    background-color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 5px 10px;
-    margin: 10px;
-    width: 100%;
-    max-width: 100%;
-    transition: all 0.2s ease-in-out;
-  }
+  display: flex;
+  align-items: center;
+  border-radius: 50px;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 5px 10px;
+  margin: 10px;
+  width: 100%;
+  max-width: 700px; /* Increase the width */
+  transition: all 0.2s ease-in-out;
+}
+
+/* Input field styles */
+.search-input {
+  flex: 1;
+  border: none;
+  border-radius: 50px;
+  padding: 10px 15px;
+  font-size: 16px;
+  background-color: #f7f7f7;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Input focus effect */
+.search-input:focus {
+  background-color: #e7e7e7;
+}
+
+/* Reset button styles */
+.reset-button {
+  border: none;
+  background-color: transparent;
+  font-size: 16px;
+  padding: 0 10px;
+  cursor: pointer;
+  outline: none;
+  color: #ff385c;
+}
+
+.reset-button:hover {
+  color: #e12748;
   
-  /* Input field styles */
-  .search-input {
-    flex: 1;
-    border: none;
-    border-radius: 50px;
-    padding: 10px 15px;
-    font-size: 16px;
-    background-color: #f7f7f7;
-    outline: none;
-    transition: all 0.2s ease-in-out;
-  }
-  
-  /* Input focus effect */
-  .search-input:focus {
-    background-color: #e7e7e7;
-  }
-  
-  /* Search button styles */
-  .search-button {
-    border: none;
-    border-radius: 50px;
-    background-color: #ff385c;
-    color: white;
-    font-size: 16px;
-    padding: 10px 20px;
-    margin-left: 10px;
-    cursor: pointer;
-    outline: none;
-    transition: all 0.2s ease-in-out;
-  }
-  
-  /* Button hover effect */
-  .search-button:hover {
-    background-color: #e12748;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  }
-  
+}
+
+/* Search button styles */
+.search-button {
+  border: none;
+  border-radius: 50px;
+  background-color: #ff385c;
+  color: white;
+  font-size: 16px;
+  padding: 10px 20px;
+  margin-left: 10px;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Button hover effect */
+.search-button:hover {
+  background-color: #e12748;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
