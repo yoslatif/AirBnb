@@ -2,10 +2,7 @@
 // import { NavLink, useLocation } from "react-router-dom";
 // import { useSelector, useDispatch } from "react-redux";
 // import { useEffect, useState } from "react";
-// import {
-//   getSpots,
-//   deleteSpot,
-// } from "../../store/spots";
+// import { getSpots, deleteSpot } from "../../store/spots";
 // import { clearSpotDetails } from "../../store/spotDetails";
 // import {
 //   resetPadding,
@@ -13,7 +10,6 @@
 //   setEditSpotModal,
 //   setSpotForEditing,
 // } from "../../store/ui";
-// import Header from "../Header/Header";
 // import ConfirmationModal from "../Modals/ConfirmationModal/ConfirmationModal";
 // import SpotGridItem from "./SpotGridItem";
 // import "./SpotGrid.css";
@@ -33,18 +29,28 @@
 //     dispatch(setHeaderPosition("fixed"));
 //   }, [dispatch]);
 
-//   // Filter spots based on search term
+//   // Enhanced filtering logic that includes multiple fields
 //   const filteredSpots = searchTerm
-//     ? spots.filter(
-//         (spot) =>
-//           (spot.location &&
-//             spot.location.toLowerCase().includes(searchTerm.toLowerCase())) ||
-//           (spot.name &&
-//             spot.name.toLowerCase().includes(searchTerm.toLowerCase()))
-//       )
+//     ? spots.filter((spot) => {
+//         // Convert all relevant spot fields to lowercase for a case-insensitive search
+//         const searchText = searchTerm.toLowerCase();
+//         const spotTitle = spot.name?.toLowerCase() || "";
+//         const spotCity = spot.city?.toLowerCase() || "";
+//         const spotState = spot.state?.toLowerCase() || "";
+//         const spotCountry = spot.country?.toLowerCase() || "";
+//         const spotHostName = spot.host?.name?.toLowerCase() || "";
+
+//         // Check if any field contains the search term
+//         return (
+//           spotTitle.includes(searchText) ||
+//           spotCity.includes(searchText) ||
+//           spotState.includes(searchText) ||
+//           spotCountry.includes(searchText) ||
+//           spotHostName.includes(searchText)
+//         );
+//       })
 //     : spots;
 
-//   // Functions for editing and deleting spots
 //   const editData = (spot) => {
 //     dispatch(setSpotForEditing(null));
 //     dispatch(setEditSpotModal(true));
@@ -56,60 +62,56 @@
 //   };
 
 //   return (
-//     <>
-//       <div className="TextCenter">
-//         {location.pathname === "/spotsgrid" && <h2>Manage Spots</h2>}
-//       </div>
-//       <div className="SpotGrid">
-//         {filteredSpots.map((spot, i) =>
-//           location.pathname === "/spotsgrid" ? (
-//             <span key={i}>
-//               <div className="EditDelete">
-//                 <div style={{ color: "green" }} onClick={() => editData(spot)}>
-//                   Update
-//                 </div>
-//                 {showDeleteSpotModal && (
-//                   <ConfirmationModal
-//                     title="Confirm Delete"
-//                     message="Are you sure you want to remove this spot?"
-//                     onConfirm={() => {
-//                       dispatch(deleteSpot(spotIdToDelete));
-//                       setShowDeleteSpotModal(false);
-//                     }}
-//                     onCancel={() => setShowDeleteSpotModal(false)}
-//                   />
-//                 )}
-//                 <div
-//                   style={{ color: "red" }}
-//                   onClick={() => {
-//                     setSpotIdToDelete(spot.id);
-//                     setShowDeleteSpotModal(true);
-//                   }}
-//                 >
-//                   Delete
-//                 </div>
+//     <div className="SpotGrid">
+//       {filteredSpots.map((spot, i) =>
+//         location.pathname === "/spotsgrid" ? (
+//           <span key={i}>
+//             <div className="EditDelete">
+//               <div style={{ color: "green" }} onClick={() => editData(spot)}>
+//                 Update
 //               </div>
-//               <NavLink
-//                 to={`/spots/${spot.id}`}
-//                 style={{ textDecoration: "none" }}
+//               {showDeleteSpotModal && (
+//                 <ConfirmationModal
+//                   title="Confirm Delete"
+//                   message="Are you sure you want to remove this spot?"
+//                   onConfirm={() => {
+//                     dispatch(deleteSpot(spotIdToDelete));
+//                     setShowDeleteSpotModal(false);
+//                   }}
+//                   onCancel={() => setShowDeleteSpotModal(false)}
+//                 />
+//               )}
+//               <div
+//                 style={{ color: "red" }}
+//                 onClick={() => {
+//                   setSpotIdToDelete(spot.id);
+//                   setShowDeleteSpotModal(true);
+//                 }}
 //               >
-//                 <SpotGridItem spot={spot} />
-//               </NavLink>
-//             </span>
-//           ) : (
+//                 Delete
+//               </div>
+//             </div>
 //             <NavLink
-//               key={i}
 //               to={`/spots/${spot.id}`}
 //               style={{ textDecoration: "none" }}
 //             >
 //               <SpotGridItem spot={spot} />
 //             </NavLink>
-//           )
-//         )}
-//       </div>
-//     </>
+//           </span>
+//         ) : (
+//           <NavLink
+//             key={i}
+//             to={`/spots/${spot.id}`}
+//             style={{ textDecoration: "none" }}
+//           >
+//             <SpotGridItem spot={spot} />
+//           </NavLink>
+//         )
+//       )}
+//     </div>
 //   );
 // }
+
 
 // SpotGrid.js
 import { NavLink, useLocation } from "react-router-dom";
@@ -145,7 +147,6 @@ export default function SpotGrid({ searchTerm }) {
   // Enhanced filtering logic that includes multiple fields
   const filteredSpots = searchTerm
     ? spots.filter((spot) => {
-        // Convert all relevant spot fields to lowercase for a case-insensitive search
         const searchText = searchTerm.toLowerCase();
         const spotTitle = spot.name?.toLowerCase() || "";
         const spotCity = spot.city?.toLowerCase() || "";
@@ -153,7 +154,6 @@ export default function SpotGrid({ searchTerm }) {
         const spotCountry = spot.country?.toLowerCase() || "";
         const spotHostName = spot.host?.name?.toLowerCase() || "";
 
-        // Check if any field contains the search term
         return (
           spotTitle.includes(searchText) ||
           spotCity.includes(searchText) ||
@@ -176,50 +176,57 @@ export default function SpotGrid({ searchTerm }) {
 
   return (
     <div className="SpotGrid">
-      {filteredSpots.map((spot, i) =>
-        location.pathname === "/spotsgrid" ? (
-          <span key={i}>
-            <div className="EditDelete">
-              <div style={{ color: "green" }} onClick={() => editData(spot)}>
-                Update
-              </div>
-              {showDeleteSpotModal && (
-                <ConfirmationModal
-                  title="Confirm Delete"
-                  message="Are you sure you want to remove this spot?"
-                  onConfirm={() => {
-                    dispatch(deleteSpot(spotIdToDelete));
-                    setShowDeleteSpotModal(false);
+      {filteredSpots.length > 0 ? (
+        filteredSpots.map((spot, i) =>
+          location.pathname === "/spotsgrid" ? (
+            <span key={i}>
+              <div className="EditDelete">
+                <div style={{ color: "green" }} onClick={() => editData(spot)}>
+                  Update
+                </div>
+                {showDeleteSpotModal && (
+                  <ConfirmationModal
+                    title="Confirm Delete"
+                    message="Are you sure you want to remove this spot?"
+                    onConfirm={() => {
+                      dispatch(deleteSpot(spotIdToDelete));
+                      setShowDeleteSpotModal(false);
+                    }}
+                    onCancel={() => setShowDeleteSpotModal(false)}
+                  />
+                )}
+                <div
+                  style={{ color: "red" }}
+                  onClick={() => {
+                    setSpotIdToDelete(spot.id);
+                    setShowDeleteSpotModal(true);
                   }}
-                  onCancel={() => setShowDeleteSpotModal(false)}
-                />
-              )}
-              <div
-                style={{ color: "red" }}
-                onClick={() => {
-                  setSpotIdToDelete(spot.id);
-                  setShowDeleteSpotModal(true);
-                }}
-              >
-                Delete
+                >
+                  Delete
+                </div>
               </div>
-            </div>
+              <NavLink
+                to={`/spots/${spot.id}`}
+                style={{ textDecoration: "none" }}
+              >
+                <SpotGridItem spot={spot} />
+              </NavLink>
+            </span>
+          ) : (
             <NavLink
+              key={i}
               to={`/spots/${spot.id}`}
               style={{ textDecoration: "none" }}
             >
               <SpotGridItem spot={spot} />
             </NavLink>
-          </span>
-        ) : (
-          <NavLink
-            key={i}
-            to={`/spots/${spot.id}`}
-            style={{ textDecoration: "none" }}
-          >
-            <SpotGridItem spot={spot} />
-          </NavLink>
+          )
         )
+      ) : (
+        // Display message if no spots match the search
+        <div className="no-matches">
+          <p>No spots match your search</p>
+        </div>
       )}
     </div>
   );

@@ -279,3 +279,11 @@
     filter: brightness(1.2);  /* Maintain the brightness effect */
     transform: scale(1.1) translateY(-3%);  /* Translate the image upwards within the container */
 }
+
+
+.no-matches {
+    font-size: 24px;
+    color: #5c5c5c;
+    text-align: center;
+    margin-top: 40px;
+}
