@@ -28,7 +28,7 @@ export default function Review({ user, review }) {
     return (
         <div className="review">
             <div className="user">
-                <h4>{firstName} · {formatDate(createdAt)}</h4>
+                <h4>{firstName} · {formatDate(review.createdAt)}</h4>
 
                 {showDeleteReviewModal && 
                     <ConfirmationModal 
@@ -49,5 +49,3 @@ export default function Review({ user, review }) {
         </div>
     );
 }
-
-// {(user && String(user.id) === String(review.User.id)) && <button className="button" onClick={onDeleteClick}>Delete review</button>}
