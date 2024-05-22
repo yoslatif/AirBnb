@@ -2,7 +2,7 @@
     display: grid;
     column-gap: 24px;
     row-gap: 40px;
-    padding-top: 120px;
+    padding-top: 150px;
 }
 
 .SpotGrid:hover {

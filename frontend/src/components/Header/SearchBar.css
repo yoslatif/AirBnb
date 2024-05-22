@@ -66,3 +66,10 @@
   background-color: #e12748;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
+
+
+@media screen and (max-width: 768px) {
+  .search-bar {
+    margin: 10px 0;
+  }
+}   /* End of SearchBar.css */
