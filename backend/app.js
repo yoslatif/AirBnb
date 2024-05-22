@@ -7,7 +7,6 @@ const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
-
 const { ValidationError } = require('sequelize');
 
 const routes = require('./routes');
@@ -25,12 +24,10 @@ if (!isProduction) {
         allowedHeaders: ['Content-Type', 'Authorization', 'XSRF-Token'],
         credentials: true,
         optionsSuccessStatus: 200
-      }));
-      
+    }));
 }
 
 app.options('*', cors());
-
 
 app.use(morgan('dev'));
 app.use(cookieParser());
@@ -39,10 +36,8 @@ app.use(session({
     secret: 'your secret key', // Secret key for signing the session ID cookie
     resave: false,            // Do not resave sessions that haven't changed
     saveUninitialized: false, // Do not save uninitialized sessions
-    cookie: { secure: true }  // Use secure cookies (requires HTTPS)
+    cookie: { secure: isProduction }  // Use secure cookies only in production (requires HTTPS)
 }));
-
-
 
 // helmet helps set a variety of headers to better secure your app
 app.use(
@@ -75,7 +70,7 @@ app.use((_req, _res, next) => {
     err.errors = { message: "The requested resource couldn't be found." };
     err.status = 404;
     next(err);
-  });
+});
 
 // Process sequelize errors
 app.use((err, _req, _res, next) => {

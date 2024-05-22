@@ -7,7 +7,6 @@ import { postSpot, putSpot } from "../../../store/spots";
 import { setSpotForEditing, setSpotModal } from "../../../store/ui";
 
 export default function SpotForm({ spot }) {
-    console.log('spotspotspot', spot)
     const [address, setAddress] = useState(spot ? spot.address : "");
     const [city, setCity] = useState(spot ? spot.city : "");
     const [state, setState] = useState(spot ? spot.state : "");
@@ -20,13 +19,10 @@ export default function SpotForm({ spot }) {
     const [imageUrl2, setImageUrl2] = useState("");
     const [imageUrl3, setImageUrl3] = useState("");
 
-
     const [errors, setErrors] = useState([]);
 
     const dispatch = useDispatch();
-
     const history = useHistory();
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -40,26 +36,36 @@ export default function SpotForm({ spot }) {
         if (newErrors.length === 0) {
             try {
                 const body = { address, city, state, country, name, description, price, images: [imageUrl1, imageUrl2, imageUrl3] };
+                let spotResponse;
                 if (spot) {
-                    await dispatch(putSpot(spot.id, body));
+                    spotResponse = await dispatch(putSpot(spot.id, body));
                     dispatch(getSpotDetails(spot.id));
                     dispatch(setSpotForEditing(null));
                     history.push("/spots/" + spot.id);
                 } else {
-                    const spot = await dispatch(postSpot(body, imageUrl1, imageUrl2, imageUrl3));
+                    spotResponse = await dispatch(postSpot(body, imageUrl1, imageUrl2, imageUrl3));
                     history.push("/");
-                    history.push("/spots/" + spot.id);
+                    history.push("/spots/" + spotResponse.id);
                 }
                 dispatch(setSpotModal(false));
             }
-            catch (errors) {
-                newErrors = newErrors.concat(Object.values(errors.errors));
+            catch (error) {
+                if (error.status === 401) {
+                    // Redirect to login page or show a message
+                    history.push('/login');
+                } else {
+                    try {
+                        const responseErrors = await error.json();
+                        newErrors = newErrors.concat(Object.values(responseErrors.errors));
+                    } catch (e) {
+                        newErrors = newErrors.concat(["An unexpected error occurred"]);
+                    }
+                }
             }
         }
     
         setErrors(newErrors);
     };
-    
 
     return (
         <form className="spotForm" onSubmit={handleSubmit}>
@@ -112,13 +118,13 @@ export default function SpotForm({ spot }) {
                 placeholder="Name"
             />
             <textarea
-    className="field"
-    style={{ height: "125px" }}
-    value={description}
-    onChange={(e) => setDescription(e.target.value)}
-    required
-    placeholder="Please describe your BnB!"
-/>
+                className="field"
+                style={{ height: "125px" }}
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                required
+                placeholder="Please describe your BnB!"
+            />
             <input
                 className={`field ${spot && "lastField"}`}
                 type="number"
