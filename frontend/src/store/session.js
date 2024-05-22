@@ -4,16 +4,15 @@ const SET_USER = 'session/setUser';
 
 const setUser = user => { return { type: SET_USER, user } };
 
-export const restoreUser = () => async dispatch => {
+export const restoreUser = () => async (dispatch) => {
     try {
-        const response = await csrfFetch('/api/session');
-        const data = await response.json();
-        dispatch(setUser(data));
-        return response;
-    } catch (errorResponse) {
-        console.log("Couldn't restore user");
+      const response = await csrfFetch("/api/session");
+      const data = await response.json();
+      dispatch(setUser(data.user || null)); // Ensure user is properly set
+    } catch (error) {
+      console.log("Couldn't restore user");
     }
-};
+  };
 
 export const login = credentials => async dispatch => {
     const response = await csrfFetch('/api/session', {

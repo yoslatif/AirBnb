@@ -5,30 +5,24 @@ import ProfileButton from "./ProfileButton/ProfileButton";
 
 export default function RightHeader() {
   const session = useSelector((state) => state.session);
-  const sessionUser = session.user ? session.user : null;
-
-  
-
-  console.log("RightHeader sessionUser:", sessionUser);
+  const sessionUser = session?.user || null;
   const dispatch = useDispatch();
-  return (
-    <span>
-      {
-        <div className="rightHeader">
-          {sessionUser && (
-            <button
-              className="createASpot button"
-              onClick={() => {
-                dispatch(setSpotModal(true));
-                dispatch(setSpotForEditing(null));
 
-              }}>
-              Create a Spot!!!
-            </button>
-          )}
-          <ProfileButton user={sessionUser} />
-        </div>
-      }
-    </span>
+
+  return (
+    <div className="rightHeader">
+      {sessionUser ? (
+        <button
+          className="createASpot button"
+          onClick={() => {
+            dispatch(setSpotModal(true));
+            dispatch(setSpotForEditing(null));
+          }}
+        >
+          Create a Spot!!!
+        </button>
+      ) : null}
+      <ProfileButton user={sessionUser} />
+    </div>
   );
-};
+}

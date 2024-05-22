@@ -1,25 +1,96 @@
-.deleteForm {
+.deleteModal {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    outline: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000; /* Ensure it appears above other elements */
+  }
+  
+  .deleteOverlay {
+    background-color: rgba(0, 0, 0, 0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999; /* Ensure it covers the whole screen */
+  }
+  
+  .deleteFormContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .deleteForm {
     display: flex;
     flex-direction: column;
     justify-content: center;
     padding: 30px;
-}
-
-.deleteFormButton {
-    height: 50px;
-    width: 280px;
-    cursor: pointer;
-    margin-top: 30px;
-    margin-bottom: 20px;
-
-    border-style: none;
+    background-color: white;
     border-radius: 10px;
-
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .deleteForm h1 {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .deleteForm ul {
+    margin-bottom: 20px;
+    color: #ff385c;
+  }
+  
+  .deleteFormButton {
+    height: 50px;
+    width: 100%;
+    cursor: pointer;
+    margin-top: 20px;
+    border: none;
+    border-radius: 10px;
     font-weight: bold;
     font-size: 16px;
-
-    color: rgb(255, 255, 255);
-    background: linear-gradient(90deg, rgb(245, 0, 0), rgb(245, 0, 0));
-
-    align-self: center;
-}
+    color: white;
+    background-color: #ff385c;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .deleteFormButton:hover {
+    background-color: #e12748;
+  }
+  
+  .cancelButton {
+    height: 50px;
+    width: 100%;
+    cursor: pointer;
+    margin-top: 10px;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    color: white;
+    background-color: #ccc;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .cancelButton:hover {
+    background-color: #999;
+  }
+  
