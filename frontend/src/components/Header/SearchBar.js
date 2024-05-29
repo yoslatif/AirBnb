@@ -4,7 +4,7 @@ import './SearchBar.css';
 
 export default function SearchBar({ onSearch }) {
   const [searchTerm, setSearchTerm] = useState('');
-  const [isSearched, setIsSearched] = useState(false); // State to track if a search was conducted
+  const [isSearched, setIsSearched] = useState(false);
 
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
@@ -14,17 +14,16 @@ export default function SearchBar({ onSearch }) {
     event.preventDefault();
     if (typeof onSearch === 'function') {
       onSearch(searchTerm);
-      setIsSearched(true); // Set state to indicate a search was conducted
+      setIsSearched(true);
     } else {
       console.error('onSearch is not defined or not a function');
     }
   };
 
-  // Reset search term to clear the input field and reset the search state
   const handleReset = () => {
     setSearchTerm('');
-    onSearch(''); // Call the search function to clear the results
-    setIsSearched(false); // Reset state to hide the clear button
+    onSearch('');
+    setIsSearched(false);
   };
 
   return (
@@ -36,10 +35,9 @@ export default function SearchBar({ onSearch }) {
         onChange={handleChange}
         className="search-input"
       />
-      {/* Conditionally display the clear button if a search has been conducted */}
       {isSearched && (
         <button type="button" className="reset-button" onClick={handleReset}>
-          clear
+          Clear
         </button>
       )}
       <button type="submit" className="search-button">Search</button>
